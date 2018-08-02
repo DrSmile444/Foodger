@@ -1,0 +1,40 @@
+.recipe {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recipe__title,
+.recipe__rank {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.recipe__rank {
+  padding: 0 5px;
+  margin: 0;
+}
+
+.recipe__image {
+  margin-bottom: 10px;
+  width: 300px;
+}
+
+.recipe__link {
+  text-decoration: none;
+}
+
+.recipe__footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipe__footer > a {
+  height: 100%;
+}
