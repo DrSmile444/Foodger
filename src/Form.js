@@ -44,12 +44,11 @@ function appendFood(text, mealClass = "", flag = true) {
 
 function appendFoodCleaner() {
   let pastCleaner = DOM.get(".meals__cleaner");
-  let lastElement = mealsArray.length === 0;
-  if (pastCleaner || lastElement) {
+  if (pastCleaner) {
     pastCleaner.remove();
   }
 
-  if (!lastElement) {
+  if (mealsArray.length > 1) {
     // creating delete el
     appendFood("Delete All", "meals__cleaner", false);
 
@@ -93,6 +92,10 @@ function createFoodList(key) {
 function deleteFood(name) {
   mealsArray = mealsArray.filter(el => el !== name.innerHTML);
   if (mealsArray.length === 0) {
+    appendFoodCleaner();
+  }
+
+  if (mealsArray.length === 1) {
     appendFoodCleaner();
   }
 

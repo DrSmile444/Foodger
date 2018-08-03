@@ -1,7 +1,12 @@
 const URL = "http://food2fork.com/api/search";
 let fetchParam = {
   key: "e874758dfbd86122e50e9c561cf7f2c1",
-  q: ""
+  q: "",
+  cors: {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
 };
 
 function saveFridgeDB() {

@@ -10,7 +10,7 @@ function apiSearch(meals) {
   setLoader("black loader animated fadeIn block");
 
   //fetching data
-  fetch(fetchUrl)
+  fetch(fetchUrl, fetchParam.cors)
     .then(response => response.json())
     .then(el => {
       clearHtmlNode("#recipes");
@@ -22,7 +22,7 @@ function apiSearch(meals) {
 }
 
 function calculateRecipes(recipesObj) {
-  // if server didn't find recipe, we will show error overlay
+  // if the server didn't find a recipe, we will show error overlay
   // else renders recipes
   if (!recipesObj.recipes.length) {
     let emptyMessage =
