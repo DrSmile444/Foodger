@@ -1,5 +1,7 @@
 let DOM = new DOMclass();
 
+importScript("src/allRecipes");
+importScript("src/exampleRecipe");
 importScript("src/foodAPI");
 importScript("src/Database");
 importScript("src/Form");
@@ -13,6 +15,7 @@ function importScript(path) {
   let target = document.querySelector("#scripts");
   let script = document.createElement("script");
 
+  script.defer = true;
   script.src = path + ".js";
   return target.appendChild(script);
 }

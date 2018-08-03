@@ -6,35 +6,92 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
 }
 
-.recipe__title,
-.recipe__rank {
+/* Recipe title and content */
+
+.recipe__title {
   border: 1px solid black;
   padding: 5px;
 }
 
-.recipe__rank {
-  padding: 0 5px;
-  margin: 0;
+.recipe-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
+/* Content items */
 
 .recipe__image {
-  margin-bottom: 10px;
-  width: 300px;
+  height: 300px;
 }
 
-.recipe__link {
-  text-decoration: none;
+/* Recipe info */
+
+.recipe-info {
+  margin-left: 20px;
 }
 
-.recipe__footer {
-  width: 100%;
+/* Texts */
+
+.recipe-info > .recipe-wrap {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.recipe__footer > a {
-  height: 100%;
+.recipe-info > .recipe-wrap p {
+  font-weight: 500;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  text-align: center;
+  min-width: 150px;
+  padding: 5px;
+  background-color: #99dbff;
+}
+
+/* Ingridients */
+
+.recipe-info > .recipe-info-ingi {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.recipe-info > .recipe-info-ingi > li {
+  padding: 3px;
+  margin: 10px;
+}
+
+.recipe-info > .recipe-info-ingi > li:before {
+  content: "►";
+  display: block;
+  float: left;
+  width: 2em;
+  color: #3fbcff;
+}
+
+/* Links */
+
+.recipe-info > .recipe-link {
+  display: flex;
+  justify-content: space-around;
+}
+
+.recipe-info > .recipe-link a {
+  border: 1px solid #3fbcff;
+  padding: 2px 20px;
+  font-weight: bold;
+  color: #3fbcff;
+  text-decoration: none;
+  font-size: 20px;
+  transition: all 0.1s ease-in-out;
+}
+
+.recipe-info > .recipe-link a:hover {
+  background-color: #3fbcff;
+  color: white;
 }
