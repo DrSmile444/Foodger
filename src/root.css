@@ -3,6 +3,10 @@
   /* transition: all 0.5s ease-in-out; */
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   display: flex;
@@ -49,15 +53,77 @@ body {
   font-weight: bold;
 }
 
-.loader {
+.show-loader {
   background: rgba(255, 255, 255, 0.5);
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3fbcff; /* Blue */
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(120deg);
+  }
+  75% {
+    transform: rotate(320deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .none {
   display: none;
 }
 
-.block {
-  display: block;
+.flex {
+  display: flex;
+}
+
+@media (max-width: 800px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+::placeholder {
+  color: #3fbcff;
+}
+
+:-ms-input-placeholder {
+  color: #3fbcff;
+}
+
+::-ms-input-placeholder {
+  color: #3fbcff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3fbcff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1f9adc;
 }

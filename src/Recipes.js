@@ -7,9 +7,14 @@ function apiSearch(meals) {
 
   // clearing recipes and setLoader
   clearHtmlNode(recipes);
-  setLoader("black loader animated fadeIn block");
+  setLoader("black show-loader animated fadeIn flex");
 
   //fetching data
+
+  // setTimeout(() => {
+  //   setLoader("black none");
+  // }, 2000);
+
   fetch(fetchUrl)
     .then(response => response.json())
     .then(el => {
@@ -56,17 +61,19 @@ function drawRecipe(el) {
       ingiCount = recipe.querySelector(".recipe-ingi-count"),
       ingi = recipe.querySelector(".recipe-info-ingi"),
       linkDetail = recipe.querySelector(".recipe-link__detail"),
-      linkOriginal = recipe.querySelector(".recipe-link__original");
+      linkOriginal = recipe.querySelector(".recipe-link__original"),
+      health = recipe.querySelector(".recipe-health");
 
     title.innerHTML = el.label;
     image.src = el.image;
     author.innerHTML = el.source;
-    diete.innerHTML = calcDietLabels(el.dietLabels);
+    diete.innerHTML = calcDietLabels(el.dietLabels, "No diet :)");
     calories.innerHTML = amountOfCalories + " cal";
     weight.innerHTML = amountOfWeight + " g";
     ingiCount.innerHTML = el.ingredientLines.length + " " + ingiCount.innerHTML;
     linkDetail.href = el.shareAs;
     linkOriginal.href = el.url;
+    health.innerHTML = calcDietLabels(el.healthLabels, "");
 
     diete.style.backgroundColor = calcColor(el.dietLabels);
     calories.style.backgroundColor = calcColor(amountOfCalories);
@@ -144,11 +151,11 @@ function calcColor(value) {
   return color;
 }
 
-function calcDietLabels(array) {
+function calcDietLabels(array, text) {
   if (array.length === 0) {
-    return "All is well :)";
+    return text;
   } else {
-    return array.join(",");
+    return array.join(", ");
   }
 }
 
@@ -199,6 +206,6 @@ function clearHtmlNode(path) {
 
 function setLoader(classNames) {
   let black = DOM.get(".black");
-  black.innerHTML = "";
+  // black.innerHTML = "";
   black.className = classNames;
 }

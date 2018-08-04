@@ -45,7 +45,9 @@
   flex-wrap: wrap;
 }
 
-.recipe-info > .recipe-wrap p {
+.recipe-info > .recipe-wrap p,
+.recipe-health {
+  cursor: context-menu;
   font-weight: 500;
   margin-top: 10px;
   margin-left: 10px;
@@ -56,6 +58,11 @@
   background-color: #99dbff;
 }
 
+.recipe-health {
+  color: #339fda;
+  background-color: #fff;
+}
+
 /* Ingridients */
 
 .recipe-info > .recipe-info-ingi {
@@ -64,7 +71,7 @@
 }
 
 .recipe-info > .recipe-info-ingi > li {
-  padding: 3px;
+  padding: 0px;
   margin: 10px;
 }
 
@@ -101,5 +108,9 @@
 @media (max-width: 800px) {
   .recipe-info > .recipe-wrap p {
     min-width: 250px;
+  }
+
+  .recipe__image {
+    margin-bottom: 15px;
   }
 }

@@ -20,7 +20,7 @@
 
 .meals div {
   margin-top: 20px;
-  background: rgb(46, 155, 214);
+  background: #2e9bd6;
   color: white;
   margin-left: 10px;
   padding: 5px;
@@ -30,19 +30,25 @@
 }
 
 .meals div:hover {
-  background-color: rgb(214, 46, 46) !important;
+  background-color: #d62e2e !important;
 }
 
 .fridges__presets div {
-  background-color: rgb(201, 63, 255) !important;
+  background-color: #c93fff !important;
 }
 
 .fridges__presets div:hover {
-  background-color: rgb(137, 63, 255) !important;
+  background-color: #893fff !important;
 }
 
 .meals__cleaner {
-  background-color: rgb(214, 46, 46) !important;
+  background-color: #d62e2e !important;
+}
+
+.add-meals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .add-meals__input {
@@ -50,7 +56,7 @@
   font-size: 18px;
   border: 0px;
   outline: 0;
-  border-bottom: 2px solid rgb(63, 188, 255);
+  border-bottom: 2px solid #3fbcff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -67,16 +73,27 @@
 
 .add-meals__search {
   color: white;
-  background: rgb(63, 189, 32);
+  background: #3fbd20;
 }
 
 nav,
 .add-meals__submit {
-  background: rgb(63, 188, 255);
+  background: #3fbcff;
   color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 nav .title {
   margin-left: 20px;
+}
+
+@media (max-width: 800px) {
+  .add-meals__input {
+    width: 100%;
+  }
+
+  .add-meals__search,
+  .add-meals__submit {
+    width: 45%;
+  }
 }

@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
   <link rel="stylesheet" href="./src/root.css">
+  <link rel="stylesheet" href="./src/styles/Meals.css">
+  <link rel="stylesheet" href="./src/styles/Recipe.css">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 </head>
 
@@ -17,16 +19,19 @@
     <h1 class="title">Foodger</h1>
   </nav>
 
-  <div class="black"></div>
+  <div class="black">
+    <div class="loader"></div>
+  </div>
 
   <div id="app">
     <div id="wrapper">
       <div id="fridge">
         <div class="add-meals">
-          <input class="add-meals__input" type="text">
-          <input class="add-meals__submit" type="submit" value="Save">
-          <input class="add-meals__search" type="submit" value="Search">
+          <input class="add-meals__input" type="text" placeholder="Type your meal...">
+          <input class="add-meals__submit" type="submit" value="Save" title="Save to database">
+          <input class="add-meals__search" type="submit" value="Search" title="Search for a recipe">
         </div>
+        <div></div>
         <div class="meals"></div>
         <div class="meals fridges__presets"></div>
       </div>
@@ -37,7 +42,7 @@
     </div>
 
     <template id="recipe-template">
-      <div class="recipe">
+      <div class="recipe animated zoomIn">
         <h2 class="recipe__title"></h2>
 
         <div class="recipe-content">
@@ -50,6 +55,7 @@
               <p class="recipe-info__calories" title="Calories"></p>
               <p class="recipe-ingo__weight" title="Weight"></p>
             </div>
+            <div class="recipe-health" title="Health"></div>
 
             <p class="recipe-ingi-count">Ingridients:</p>
             <ul class="recipe-info-ingi"></ul>
