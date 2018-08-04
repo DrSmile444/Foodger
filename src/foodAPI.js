@@ -1,12 +1,8 @@
-const URL = "http://food2fork.com/api/search";
+const URL = "https://api.edamam.com/search";
 let fetchParam = {
-  key: "e874758dfbd86122e50e9c561cf7f2c1",
-  q: "",
-  cors: {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }
+  appId: "8a9271c0",
+  appKey: "54266936a0e32d968146b29c6659cdc5",
+  q: ""
 };
 
 function saveFridgeDB() {
@@ -14,5 +10,4 @@ function saveFridgeDB() {
   if (!name) return;
 
   fridgersRef.child(name).set(mealsArray);
-  let frigeObject = {};
 }

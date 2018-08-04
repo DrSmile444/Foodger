@@ -1,4 +1,6 @@
 let DOM = new DOMclass();
+DOM.import("./src/styles/Meals");
+DOM.import("src/styles/Recipe");
 
 importScript("src/allRecipes");
 importScript("src/exampleRecipe");

@@ -3,10 +3,6 @@ let inputFood = DOM.get(".add-meals__input");
 let searchFood = DOM.get(".add-meals__search");
 let foodTarget = DOM.get(".meals");
 
-let p = console.log;
-
-DOM.import("./src/styles/Meals");
-
 let mealsArray = [];
 
 submitFridge.addEventListener("click", saveFridgeDB);
@@ -20,7 +16,7 @@ function inputSubmit(event) {
     let text = inputFood.value.trim().toLowerCase();
     inputFood.value = "";
 
-    if (isEmpty(text) || !!~mealsArray.indexOf(text)) {
+    if (!text || !!~mealsArray.indexOf(text)) {
       return;
     }
 
@@ -100,12 +96,4 @@ function deleteFood(name) {
   }
 
   name.remove();
-}
-
-//
-// Additional
-//
-
-function isEmpty(text) {
-  return !text.length;
 }

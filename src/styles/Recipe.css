@@ -14,6 +14,8 @@
 .recipe__title {
   border: 1px solid black;
   padding: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .recipe-content {
@@ -94,4 +96,10 @@
 .recipe-info > .recipe-link a:hover {
   background-color: #3fbcff;
   color: white;
+}
+
+@media (max-width: 800px) {
+  .recipe-info > .recipe-wrap p {
+    min-width: 250px;
+  }
 }
