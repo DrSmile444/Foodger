@@ -59,15 +59,44 @@ function appendFoodCleaner() {
 
 function appendFridge(name, key) {
   let fridge = DOM.get(".fridges__presets");
+  let width = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+  );
 
   let item = DOM.create("div");
+  let remove = DOM.create("div");
+  let removeText = DOM.create("p");
 
   if (name.length > 40) {
     name = name.slice(0, 40) + "...";
   }
 
-  item.innerHTML = name;
+  // delete fridge presset
+  remove.addEventListener("click", () => {
+    removeFirebaseNode(`/frigers/${key}`);
+  });
+
+  // display and hide the button "remove the fridge"
   item.addEventListener("click", () => createFoodList(key));
+
+  item.addEventListener("mousemove", () => {
+    remove.style.display = "flex";
+  });
+
+  item.addEventListener("mouseout", () => {
+    if (width > 800) {
+      remove.style.display = "none";
+    }
+  });
+
+  item.className = "animated pulse fridge";
+  item.innerHTML = name;
+
+  removeText.innerHTML = "x";
+  remove.className = "animated tada remove-button";
+  remove.appendChild(removeText);
+  item.appendChild(remove);
 
   fridge.appendChild(item);
 }
@@ -75,13 +104,16 @@ function appendFridge(name, key) {
 function createFoodList(key) {
   fridgersRef.child(key).on("value", function(data) {
     let tempMealsArray = data.val();
+    let isDeleted = tempMealsArray === null;
 
-    tempMealsArray.forEach(el => {
-      if (!~mealsArray.indexOf(el)) {
-        appendFood(el);
-      }
-    });
-    appendFoodCleaner();
+    if (!isDeleted) {
+      tempMealsArray.forEach(el => {
+        if (!~mealsArray.indexOf(el)) {
+          appendFood(el);
+        }
+      });
+      appendFoodCleaner();
+    }
   });
 }
 

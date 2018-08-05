@@ -10,3 +10,7 @@ fridgersRef.on("value", function(data) {
     appendFridge(`${el} - ${data.val()[el]}`, el);
   });
 });
+
+function removeFirebaseNode(path) {
+  return database.ref(path).remove();
+}

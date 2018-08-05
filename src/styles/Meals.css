@@ -33,12 +33,31 @@
   background-color: #d62e2e !important;
 }
 
-.fridges__presets div {
+.fridges__presets div:hover {
+  background-color: #893fff !important;
+}
+
+.fridge {
+  position: relative;
   background-color: #c93fff !important;
 }
 
-.fridges__presets div:hover {
-  background-color: #893fff !important;
+.remove-button {
+  background-color: #d62e2e !important;
+  width: 30px;
+  height: 100%;
+  top: -20px;
+  right: 0;
+  position: absolute;
+  box-sizing: border-box;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove-button:hover {
+  background-color: #d62e2e !important;
+  border: 4px solid white;
 }
 
 .meals__cleaner {
@@ -95,5 +114,9 @@ nav .title {
   .add-meals__search,
   .add-meals__submit {
     width: 45%;
+  }
+
+  .remove-button {
+    display: flex;
   }
 }
