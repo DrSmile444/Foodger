@@ -33,7 +33,7 @@
   background-color: #d62e2e !important;
 }
 
-.fridges__presets div:hover {
+.fridges__presets > div:hover {
   background-color: #893fff !important;
 }
 
@@ -104,6 +104,18 @@ nav,
 
 nav .title {
   margin-left: 20px;
+}
+
+.item-text {
+  margin: 0;
+}
+
+.recipe__presets > div {
+  background-color: #3fbd20 !important;
+}
+
+.recipe__presets > div:hover {
+  background-color: #55d435 !important;
 }
 
 @media (max-width: 800px) {

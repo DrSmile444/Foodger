@@ -1,16 +1,70 @@
 let database = firebase.database();
 let fridgersRef = database.ref("/frigers/");
+let recipesRef = database.ref("/recipes/");
 
 fridgersRef.on("value", function(data) {
   clearHtmlNode(".fridges__presets");
 
-  let fridgersKeys = Object.keys(data.val());
+  let value = data.val();
+  let fridgersKeys = Object.keys(value);
 
   fridgersKeys.forEach(el => {
-    appendFridge(`${el} - ${data.val()[el]}`, el);
+    let data = {
+      type: "ADD_MEALS_LIST",
+      name: `${el} - ${value[el]}`,
+      key: el,
+      htmlTarget: ".fridges__presets",
+      htmlTemplate: "#item-template",
+      firebase: "/frigers/"
+    };
+
+    appendFridgeItem(data);
   });
 });
 
-function removeFirebaseNode(path) {
-  return database.ref(path).remove();
+recipesRef.on("value", function(data) {
+  clearHtmlNode(".recipe__presets");
+
+  let value = data.val();
+
+  if (value) {
+    let recipesKey = Object.keys(value);
+
+    recipesKey.forEach(el => {
+      let name =
+        value[el].label > 25
+          ? value[el].label.slice(0, 25) + "..."
+          : value[el].label;
+      let data = {
+        type: "ADD_RECIPES_LIST",
+        name,
+        key: el,
+        htmlTarget: ".recipe__presets",
+        htmlTemplate: "#item-template",
+        firebase: "/recipes/"
+      };
+
+      appendFridgeItem(data);
+    });
+  }
+});
+
+class Fire {
+  constructor() {
+    this.state = {};
+  }
+
+  removeNode(path) {
+    return database.ref(path).remove();
+  }
+
+  setNode(path, data) {
+    return database.ref(path).set(data);
+  }
+
+  pushNode(path, data) {
+    return database.ref(path).push(data);
+  }
 }
+
+let fire = new Fire();

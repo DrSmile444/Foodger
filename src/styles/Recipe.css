@@ -105,6 +105,26 @@
   color: white;
 }
 
+.recipe-link__save-recipe {
+  border-radius: 50%;
+  border: 0;
+  height: 30px;
+  width: 30px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  outline: 0;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #55ed5a;
+  color: #fff;
+  transition: all 0.2s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.recipe-link__save-recipe:hover {
+  background-color: #40d345;
+}
+
 @media (max-width: 800px) {
   .recipe-info > .recipe-wrap p {
     min-width: 250px;
