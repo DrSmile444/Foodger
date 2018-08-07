@@ -118,7 +118,20 @@ nav .title {
   background-color: #55d435 !important;
 }
 
+.recipe-info-hide {
+  display: none;
+}
+
 @media (max-width: 800px) {
+  .add-meals {
+    width: 90%;
+    justify-content: space-evenly;
+  }
+
+  .add-meals * {
+    margin: 0px;
+  }
+
   .add-meals__input {
     width: 100%;
   }
@@ -130,5 +143,51 @@ nav .title {
 
   .remove-button {
     display: flex;
+  }
+
+  .recipe-info {
+    margin-left: 0px !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .recipe-wrap {
+    justify-content: space-evenly !important;
+  }
+
+  .recipe-wrap > p {
+    margin-left: 0px !important;
+  }
+
+  .recipe-ingi-wrapper,
+  .recipe-info-hide-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #fridge {
+    min-width: 300px;
+  }
+
+  .recipe-info-ingi {
+    display: none;
+  }
+
+  .recipe-ingi-count,
+  .recipe-info-hide {
+    cursor: pointer;
+    border: 1px solid #3fbcff;
+    padding: 2px 20px;
+    font-weight: bold;
+    color: #3fbcff;
+    font-size: 20px;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .recipe-info-hide {
+    color: white;
+    background-color: #3fbcff;
   }
 }

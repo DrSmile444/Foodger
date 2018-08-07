@@ -1,4 +1,8 @@
-let addedRecipe = [];
+let allRecipesOnTheServer;
+
+recipesRef.on("value", function(data) {
+  allRecipesOnTheServer = data.val();
+});
 
 function apiSearch(meals) {
   // forming meals list
@@ -29,7 +33,12 @@ function apiSearch(meals) {
     .catch(console.error);
 }
 
-window.onload = () => calculateRecipes(saladRecipes.hits);
+// draws recipes for test
+window.onload = () => {
+  setTimeout(() => {
+    calculateRecipes(saladRecipes.hits);
+  }, 1000);
+};
 
 function calculateRecipes(recipesObj) {
   // if the server didn't find a recipe, we will show error overlay
@@ -37,6 +46,7 @@ function calculateRecipes(recipesObj) {
   let emptyMessage =
     "Sorry, we didn't find recipes with this meals for you. :( Try other meals!!!";
   let errorMessage = "Sorry, your browser doesn't support this app :(";
+
   if (!recipesObj.length) {
     drawEmpty(emptyMessage);
   } else {
@@ -51,6 +61,8 @@ function calculateRecipes(recipesObj) {
 }
 
 function drawRecipe(el) {
+  // the function receives an element from the API
+  // and then draws it
   let recipeTarget = DOM.get("#recipes");
   let recipeOrigin = DOM.get("#recipe-template");
   let recipe = document.importNode(recipeOrigin.content, true);
@@ -68,6 +80,8 @@ function drawRecipe(el) {
     healthLabels: el.healthLabels
   };
 
+  let recipeCode = getRecipeCode(recipeObject);
+
   let title = recipe.querySelector(".recipe__title"),
     imageRecipe = recipe.querySelector(".recipe__image"),
     author = recipe.querySelector(".recipe-info__author"),
@@ -79,8 +93,10 @@ function drawRecipe(el) {
     linkDetail = recipe.querySelector(".recipe-link__detail"),
     linkOriginal = recipe.querySelector(".recipe-link__original"),
     saveRecipe = recipe.querySelector(".recipe-link__save-recipe"),
-    health = recipe.querySelector(".recipe-health");
+    health = recipe.querySelector(".recipe-health"),
+    hide = recipe.querySelector(".recipe-info-hide");
 
+  // set recipe data
   title.innerHTML = el.label;
   imageRecipe.src = el.image;
   author.innerHTML = el.source;
@@ -92,14 +108,35 @@ function drawRecipe(el) {
   linkOriginal.href = el.url;
   health.innerHTML = calcDietLabels(el.healthLabels, "");
 
+  // if the recipe already were added, we will toggle button
+  if (allRecipesOnTheServer) {
+    if (allRecipesOnTheServer[recipeCode]) {
+      _toggleRemoveButton(saveRecipe);
+    }
+  }
+
+  // if device is mobile phone, we hide recipe list and must show it
+  // by click
+  if (currentWidth <= 640) {
+    ingiCount.addEventListener("click", () => {
+      _toggleIngi(ingiCount, ingi, hide);
+    });
+
+    hide.addEventListener("click", () => {
+      _toggleIngi(ingiCount, ingi, hide, { type: "hide" });
+    });
+  }
+
+  saveRecipe.setAttribute("data-recipe-code", recipeCode);
   saveRecipe.addEventListener("click", () =>
-    saveRecipeEngine(saveRecipe, recipeObject)
+    saveRecipeEngine(saveRecipe, recipeObject, recipeCode)
   );
 
   diete.style.backgroundColor = calcColor(el.dietLabels);
   caloriesRecipe.style.backgroundColor = calcColor(recipeObject.calories);
   weight.style.backgroundColor = calcColor(recipeObject.totalWeight);
 
+  // forming ingredients list
   for (let i = 0, n = el.ingredientLines.length; i < n; i++) {
     let ingiItem = DOM.create("li");
     ingiItem.innerHTML = el.ingredientLines[i];
@@ -110,42 +147,95 @@ function drawRecipe(el) {
   recipeTarget.append(recipe);
 }
 
-function saveRecipeEngine(htmlNode, recipe) {
-  if (htmlNode.innerHTML === "+") {
-    fire.pushNode(`/recipes/`, recipe).then(el => {
-      htmlNode.innerHTML = "-";
-      htmlNode.style.backgroundColor = "#d34040";
+// useful functions for drawing a recipe
 
-      addedRecipe.push(htmlNode, el.path.pieces_[1]);
+function saveRecipeEngine(htmlNode, recipe, name) {
+  // depending on the value of the htmlNode
+  // the function will add or delete a node at the database
+  if (htmlNode.innerHTML === "+") {
+    fire.setNode(`/recipes/${name}`, recipe).then(() => {
+      _toggleRemoveButton(htmlNode);
     });
   } else {
-    let index = addedRecipe.indexOf(htmlNode);
-
-    if (!!~index) {
-      let node = addedRecipe[index];
-      let url = addedRecipe[index + 1];
-
-      fire.removeNode(`/recipes/${url}`).then(() => {
-        htmlNode.innerHTML = "+";
-        htmlNode.style.backgroundColor = "#40d345";
-
-        addedRecipe = addedRecipe.filter(el => el !== node && el !== url);
-      });
-    }
+    fire.removeNode(`/recipes/${name}`).then(() => {
+      _toggleRemoveButton(htmlNode);
+    });
   }
 }
 
-function drawEmpty(text) {
+function _toggleRemoveButton(htmlNode) {
+  if (htmlNode.innerHTML === "+") {
+    htmlNode.innerHTML = "-";
+    htmlNode.style.backgroundColor = "#d34040";
+  } else {
+    htmlNode.innerHTML = "+";
+    htmlNode.style.backgroundColor = "#40d345";
+  }
+}
+
+function _toggleIngi(htmlNode, listNode, hideListNode, prop = {}) {
+  // the main purpose of this function is
+  // to switch the view list node for the mobile device
+  var computedStyle = window.getComputedStyle(htmlNode, null);
+
+  let blue = "rgb(63, 188, 255)";
+
+  if (prop.type !== "hide" && computedStyle.color === blue) {
+    htmlNode.style.color = "white";
+    htmlNode.style.backgroundColor = blue;
+
+    listNode.style.display = "block";
+    hideListNode.style.display = "block";
+  } else {
+    htmlNode.style.color = blue;
+    htmlNode.style.backgroundColor = "white";
+
+    listNode.style.display = "none";
+    hideListNode.style.display = "none";
+  }
+}
+
+function setLoader(classNames) {
+  // it sets the loader depending on the argument
   let black = DOM.get(".black");
-  black.innerHTML = text;
-  black.className = "black animated fadeIn block";
+  black.className = classNames;
+}
+
+function drawEmpty(text = "Something goes wrong!") {
+  // it draws a message with specific text for the user
+  let black = DOM.get(".black");
+  let loader = DOM.get(".loader");
+  let textContainer = DOM.get(".black-text");
+
+  textContainer.innerHTML = text;
+  textContainer.className = "black-text flex";
+  black.className = "black animated fadeIn flex";
+  loader.className = "none";
+
+  black.addEventListener(
+    "click",
+    function _hideOverlay() {
+      black.className = "black none";
+      black.removeEventListener("click", _hideOverlay, true);
+      unMountText();
+    },
+    true
+  );
 
   setTimeout(() => {
-    black.className = "black none";
+    unMountText();
   }, 5000);
+
+  function unMountText() {
+    black.className = "black none";
+    textContainer.className = "black-text none";
+    loader.className = "loader";
+  }
 }
 
 function calcColor(value) {
+  // it needs to calculate a color
+  // depending on the value
   let green = "#73e656",
     yellow = "#e6dc56",
     orange = "#e6a856",
@@ -166,22 +256,20 @@ function calcColor(value) {
     //
   } else if (typeof value === "object") {
     //
-    let low =
-      isArrayContain(value, [
-        "Low-Carb",
-        "Low-Fat",
-        "Low-Sodium",
-        "Low-Sugar",
-        "Alcohol-Free",
-        "Vegetarian",
-        "Vegan"
-      ]) || value.length === 0;
-    let medium = isArrayContain(value, [
-      "Paleo",
-      "High-Fiber",
-      "High-Protein",
-      "Balanced"
-    ]);
+    let lowArray = [
+      "Low-Carb",
+      "Low-Fat",
+      "Low-Sodium",
+      "Low-Sugar",
+      "Alcohol-Free",
+      "Vegetarian",
+      "Vegan"
+    ];
+
+    let mediumArray = ["Paleo", "High-Fiber", "High-Protein", "Balanced"];
+    //
+    let low = isArrayContain(value, lowArray) || value.length === 0;
+    let medium = isArrayContain(value, mediumArray);
 
     if (low) color = green;
     if (medium) color = yellow;
@@ -194,6 +282,9 @@ function calcColor(value) {
 }
 
 function calcDietLabels(array, text) {
+  // the function returns a diet label text
+  // sometimes the array is empty and we need show
+  // an another text
   if (array.length === 0) {
     return text;
   } else {
@@ -202,6 +293,7 @@ function calcDietLabels(array, text) {
 }
 
 function isArrayContain(array, value) {
+  // the function checks whether the array has the value
   if (typeof value === "string") {
     //
     return !!~array.indexOf(value);
@@ -227,12 +319,15 @@ function isArrayContain(array, value) {
 }
 
 function setClass(names) {
+  // the function gets an array of class names
+  // and then sets it to arguments
   for (let i = 1, n = arguments.length; i < n; i++) {
     arguments[i].className = names[i - 1];
   }
 }
 
 function clearHtmlNode(path) {
+  // delete the node on the specified path
   let target;
 
   switch (typeof path) {
@@ -246,8 +341,42 @@ function clearHtmlNode(path) {
   target.innerHTML = "";
 }
 
-function setLoader(classNames) {
-  let black = DOM.get(".black");
-  // black.innerHTML = "";
-  black.className = classNames;
+// Forming recipe secret code
+function getRecipeCode(recipe) {
+  // returns specified recipe code
+  let code = "";
+  let fields = Object.keys(recipe);
+
+  code += recipe.label.slice(0, 3);
+
+  fields.forEach(el => {
+    let singleField = recipe[el];
+    let type = typeof singleField;
+
+    if (type === "string" || type === "number") {
+      code += returnChar(singleField);
+    } else if (type === "object") {
+      singleField.forEach(el => {
+        code += returnChar(el) + returnChar(el, 4);
+      });
+    }
+  });
+
+  // filter "/" because it breaks the database object
+  code = code
+    .split("")
+    .filter(el => el !== "/")
+    .join("");
+
+  return code;
+}
+
+function returnChar(string, index = "last") {
+  string = string + "";
+
+  if (index === "last") {
+    index = string.length - 1;
+  }
+
+  return string[index];
 }

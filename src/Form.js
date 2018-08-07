@@ -3,6 +3,11 @@ let inputFood = DOM.get(".add-meals__input");
 let searchFood = DOM.get(".add-meals__search");
 let foodTarget = DOM.get(".meals");
 
+let currentWidth = Math.max(
+  document.documentElement.clientWidth,
+  window.innerWidth || 0
+);
+
 let mealsArray = [];
 
 submitFridge.addEventListener("click", saveFridgeDB);
@@ -62,23 +67,24 @@ function appendFridgeItem(data) {
   let itemOrigin = DOM.get(data.htmlTemplate);
   let item = document.importNode(itemOrigin.content, true);
 
-  let currentWidth = Math.max(
-    document.documentElement.clientWidth,
-    window.innerWidth || 0
-  );
-
   let container = item.querySelector(".item");
   let textZone = item.querySelector(".item-text");
   let remove = item.querySelector(".item-remove");
   let removeText = item.querySelector(".item-remove__text");
 
-  if (data.name.length > 40) {
-    data.name = data.name.slice(0, 40) + "...";
-  }
+  data.name = truncate(data.name, 40);
 
-  // delete fridge presset
+  // delete item preset
   remove.addEventListener("click", () => {
-    fire.removeNode(`${data.firebase}${data.key}`);
+    //
+
+    fire.removeNode(`${data.firebase}${data.key}`).then(() => {
+      if (data.type === "ADD_RECIPES_LIST") {
+        let el = document.querySelector(`[data-recipe-code="${data.key}"]`);
+        _toggleRemoveButton(el);
+      }
+    });
+    //
   });
 
   // display and hide the button "remove the fridge"
@@ -156,4 +162,8 @@ function deleteFood(name) {
   }
 
   name.remove();
+}
+
+function truncate(str, maxlength) {
+  return str.length > maxlength ? str.slice(0, maxlength - 3) + "..." : str;
 }

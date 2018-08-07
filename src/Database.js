@@ -6,20 +6,23 @@ fridgersRef.on("value", function(data) {
   clearHtmlNode(".fridges__presets");
 
   let value = data.val();
-  let fridgersKeys = Object.keys(value);
 
-  fridgersKeys.forEach(el => {
-    let data = {
-      type: "ADD_MEALS_LIST",
-      name: `${el} - ${value[el]}`,
-      key: el,
-      htmlTarget: ".fridges__presets",
-      htmlTemplate: "#item-template",
-      firebase: "/frigers/"
-    };
+  if (value) {
+    let fridgersKeys = Object.keys(value);
 
-    appendFridgeItem(data);
-  });
+    fridgersKeys.forEach(el => {
+      let data = {
+        type: "ADD_MEALS_LIST",
+        name: `${el} - ${value[el]}`,
+        key: el,
+        htmlTarget: ".fridges__presets",
+        htmlTemplate: "#item-template",
+        firebase: "/frigers/"
+      };
+
+      appendFridgeItem(data);
+    });
+  }
 });
 
 recipesRef.on("value", function(data) {
@@ -31,10 +34,8 @@ recipesRef.on("value", function(data) {
     let recipesKey = Object.keys(value);
 
     recipesKey.forEach(el => {
-      let name =
-        value[el].label > 25
-          ? value[el].label.slice(0, 25) + "..."
-          : value[el].label;
+      let name = truncate(value[el].label, 25);
+
       let data = {
         type: "ADD_RECIPES_LIST",
         name,
