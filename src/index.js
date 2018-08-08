@@ -5,11 +5,27 @@ importScript("src/exampleRecipe");
 importScript("src/foodAPI");
 importScript("src/Database");
 importScript("src/Form");
+importScript("src/DrawRecipe");
 importScript("src/Recipes");
 
 //
 // Script loader
 //
+
+function clearHtmlNode(path) {
+  // delete the node on the specified path
+  let target;
+
+  switch (typeof path) {
+    case "string":
+      target = DOM.get(path);
+      break;
+    case "object":
+      target = path;
+  }
+
+  target.innerHTML = "";
+}
 
 function importScript(path) {
   let target = document.querySelector("#scripts");

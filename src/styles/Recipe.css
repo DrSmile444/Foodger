@@ -1,4 +1,5 @@
 .recipe {
+  position: relative;
   margin-top: 10px;
   margin-bottom: 30px;
   border-top: 1px solid #ccc;
@@ -123,6 +124,23 @@
 
 .recipe-link__save-recipe:hover {
   background-color: #40d345;
+}
+
+/* Hide button */
+
+.hide-recipe {
+  /* display: none; */
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.hide-recipe__text {
+  padding: 5px;
+  font-size: 1rem;
+  background-color: #d34040;
+  color: white;
+  cursor: pointer;
 }
 
 @media (max-width: 800px) {

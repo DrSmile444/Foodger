@@ -9,6 +9,10 @@ class DOMclass {
     return document.querySelector(element);
   }
 
+  getAll(element) {
+    return document.querySelectorAll(element);
+  }
+
   create(element) {
     return document.createElement(element);
   }

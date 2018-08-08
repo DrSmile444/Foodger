@@ -81,7 +81,10 @@ function appendFridgeItem(data) {
     fire.removeNode(`${data.firebase}${data.key}`).then(() => {
       if (data.type === "ADD_RECIPES_LIST") {
         let el = document.querySelector(`[data-recipe-code="${data.key}"]`);
-        _toggleRemoveButton(el);
+
+        if (el) {
+          _toggleRemoveButton(el);
+        }
       }
     });
     //
@@ -91,6 +94,8 @@ function appendFridgeItem(data) {
   container.addEventListener("click", () => {
     if (data.type === "ADD_MEALS_LIST") {
       createFormList(data.firebase, data.key);
+    } else if (data.type === "ADD_RECIPES_LIST") {
+      drawRecipeFromPreset(data.key);
     }
   });
 
