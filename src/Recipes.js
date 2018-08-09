@@ -34,11 +34,12 @@ function apiSearch(meals) {
 }
 
 // draws recipes for test
-// window.onload = () => {
-//   setTimeout(() => {
-//     calculateRecipes(saladRecipes.hits);
-//   }, 1000);
-// };
+window.onload = () => {
+  setTimeout(() => {
+    // calculateRecipes(saladRecipes.hits);
+    toggleRecipes();
+  }, 1000);
+};
 
 function calculateRecipes(recipesObj) {
   // if the server didn't find a recipe, we will show error overlay

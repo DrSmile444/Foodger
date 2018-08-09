@@ -98,7 +98,7 @@
   color: #3fbcff;
   text-decoration: none;
   font-size: 20px;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .recipe-info > .recipe-link a:hover {
@@ -136,12 +136,47 @@
 }
 
 .hide-recipe__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 5px;
-  font-size: 1rem;
   background-color: #d34040;
   color: white;
   cursor: pointer;
+
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
 }
+
+/* Hide all button */
+
+.hide-all-recipes {
+  margin-top: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hide-all-recipes__text {
+  cursor: pointer;
+  color: white;
+  margin: 0px;
+  padding: 5px;
+  background-color: red;
+  width: max-content;
+  opacity: 0.2;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.hide-all-recipes__text:hover {
+  opacity: 1;
+}
+
+/* Media */
 
 @media (max-width: 800px) {
   .recipe-info > .recipe-wrap p {

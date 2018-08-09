@@ -1,13 +1,14 @@
 #fridge {
   background: url(../../assets/fridge_stylized.png) no-repeat;
   background-size: 100%;
-  height: 90%;
-  width: 50%;
+  height: max-content;
+  width: 50vw;
   min-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .meals {
@@ -26,7 +27,7 @@
   padding: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .meals div:hover {
@@ -110,6 +111,10 @@ nav .title {
   margin: 0;
 }
 
+.recipe__presets {
+  display: none;
+}
+
 .recipe__presets > div {
   background-color: #3fbd20 !important;
 }
@@ -122,7 +127,22 @@ nav .title {
   display: none;
 }
 
+.recipes-toggler {
+  padding: 10px 40px;
+  background-color: #4b9b23;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+.recipes-toggler__text {
+  margin: 0px;
+}
+
 @media (max-width: 800px) {
+  #fridge {
+    width: auto;
+  }
+
   .add-meals {
     width: 90%;
     justify-content: space-evenly;

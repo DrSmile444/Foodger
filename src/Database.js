@@ -34,11 +34,9 @@ recipesRef.on("value", function(data) {
     let recipesKey = Object.keys(value);
 
     recipesKey.forEach(el => {
-      let name = truncate(value[el].label, 25);
-
       let data = {
         type: "ADD_RECIPES_LIST",
-        name,
+        name: value[el].label,
         key: el,
         htmlTarget: ".recipe__presets",
         htmlTemplate: "#item-template",

@@ -27,15 +27,22 @@
   <div id="app">
     <div id="wrapper">
       <div id="fridge">
+
         <div class="add-meals">
           <input class="add-meals__input" type="text" placeholder="Type your meal...">
           <input class="add-meals__submit" type="submit" value="Save" title="Save to database">
           <input class="add-meals__search" type="submit" value="Search" title="Search for a recipe">
         </div>
-        <div></div>
+
         <div class="meals"></div>
         <div class="meals fridges__presets"></div>
-        <div class="meals recipe__presets"></div>
+        <div class="recipes-toggler">
+          <p class="recipes-toggler__text">Show recipes</p>
+        </div>
+
+        <div class="meals recipe__presets">
+
+        </div>
       </div>
     </div>
 
@@ -77,7 +84,7 @@
           </div>
         </div>
         <div class="hide-recipe">
-          <p class="hide-recipe__text">Hide</p>
+          <p class="hide-recipe__text">x</p>
         </div>
       </div>
     </template>
@@ -91,6 +98,11 @@
       </div>
     </template>
 
+    <template id="hide-all-recipes-template">
+      <div class="animated zoomIn hide-all-recipes">
+        <p class="hide-all-recipes__text">Hide all</p>
+      </div>
+    </template>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>

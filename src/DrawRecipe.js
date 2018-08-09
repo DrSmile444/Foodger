@@ -21,7 +21,11 @@ function drawRecipe(el) {
   let recipeCode = getRecipeCode(recipeObject);
   let recipeRoot = recipe.querySelector(".recipe");
   let hideWholeRecipe = recipe.querySelector(".hide-recipe");
-  hideWholeRecipe.addEventListener("click", () => recipeRoot.remove());
+
+  hideWholeRecipe.addEventListener("click", () => {
+    recipeRoot.remove();
+    drawHideAllRecipes();
+  });
 
   let title = recipe.querySelector(".recipe__title"),
     imageRecipe = recipe.querySelector(".recipe__image"),
@@ -85,24 +89,47 @@ function drawRecipe(el) {
     ingi.append(ingiItem);
   }
 
+  drawHideAllRecipes();
+
   recipeTarget.append(recipe);
+}
+
+function drawHideAllRecipes() {
+  let el = DOM.get("[data-hide-all=true]");
+  let recipeTarget = DOM.get("#recipes");
+  let allRecipes = DOM.getAll(".recipe");
+
+  if (!el) {
+    let hideAllOrigin = DOM.get("#hide-all-recipes-template");
+    let hideAll = document.importNode(hideAllOrigin.content, true);
+
+    let button = hideAll.querySelector(".hide-all-recipes");
+
+    button.setAttribute("data-hide-all", true);
+    button.addEventListener("click", () => clearHtmlNode(recipeTarget));
+
+    recipeTarget.append(button);
+  } else {
+    if (!allRecipes.length) {
+      clearHtmlNode(recipeTarget);
+      return "Removed";
+    }
+  }
 }
 
 function drawRecipeFromPreset(key) {
   let el = document.querySelector(`[data-recipe-code="${key}"]`);
 
   // I check whether it doesn't repeat
-  if (!el) {
-    if (allRecipesOnTheServer[key]) {
-      let recipesNodes = DOM.getAll(".recipe");
-      let recipeRoot = DOM.get("#recipes");
+  if (!el && allRecipesOnTheServer[key]) {
+    let recipesNodes = DOM.getAll(".recipe");
+    let recipeRoot = DOM.get("#recipes");
 
-      if (recipesNodes.length > 9) {
-        clearHtmlNode(recipeRoot);
-      }
-
-      drawRecipe(allRecipesOnTheServer[key]);
+    if (recipesNodes.length > 9) {
+      clearHtmlNode(recipeRoot);
     }
+
+    drawRecipe(allRecipesOnTheServer[key]);
   }
 }
 

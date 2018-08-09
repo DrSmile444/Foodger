@@ -72,7 +72,9 @@ function appendFridgeItem(data) {
   let remove = item.querySelector(".item-remove");
   let removeText = item.querySelector(".item-remove__text");
 
-  data.name = truncate(data.name, 40);
+  container.title = data.name;
+
+  data.name = truncate(data.name, Math.floor(currentWidth / 20));
 
   // delete item preset
   remove.addEventListener("click", () => {
@@ -118,25 +120,6 @@ function appendFridgeItem(data) {
   itemTarget.appendChild(container);
 }
 
-function appendRecipePreset(name, key) {
-  let itemTarget = DOM.get(".recipe__presets");
-  let itemOrigin = DOM.get("#item-template");
-  let item = document.importNode(itemOrigin.content, true);
-
-  let container = item.querySelector(".item");
-  let remove = item.querySelector(".item-remove");
-  let removeText = item.querySelector(".item-remove__text");
-
-  if (name.length > 40) {
-    name = name.slice(0, 40) + "...";
-  }
-
-  // delete item presset
-  remove.addEventListener("click", () => {
-    fire.removeNode(`/recipes/${key}`);
-  });
-}
-
 function createFormList(path, key) {
   database
     .ref(path)
@@ -156,6 +139,26 @@ function createFormList(path, key) {
     });
 }
 
+function toggleRecipes() {
+  let toggleButton = DOM.get(".recipes-toggler");
+  let toggleText = DOM.get(".recipes-toggler__text");
+  let recipesNode = DOM.get(".recipe__presets");
+
+  toggleButton.style.display = "block";
+
+  toggleButton.addEventListener("click", () => {
+    let computedStyle = window.getComputedStyle(recipesNode, null);
+
+    if (computedStyle.display === "none") {
+      recipesNode.style.display = "flex";
+      toggleText.innerHTML = "Hide recipes";
+    } else {
+      recipesNode.style.display = "none";
+      toggleText.innerHTML = "Show recipes";
+    }
+  });
+}
+
 function deleteFood(name) {
   mealsArray = mealsArray.filter(el => el !== name.innerHTML);
   if (mealsArray.length === 0) {
@@ -170,5 +173,6 @@ function deleteFood(name) {
 }
 
 function truncate(str, maxlength) {
+  maxlength = maxlength > 40 ? 40 : maxlength;
   return str.length > maxlength ? str.slice(0, maxlength - 3) + "..." : str;
 }
