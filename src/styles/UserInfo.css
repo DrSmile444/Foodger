@@ -1,0 +1,10 @@
+#user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info-image__image {
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}

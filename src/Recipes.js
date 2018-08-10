@@ -1,9 +1,5 @@
 let allRecipesOnTheServer;
 
-recipesRef.on("value", function(data) {
-  allRecipesOnTheServer = data.val();
-});
-
 function apiSearch(meals) {
   // forming meals list
   fetchParam.q = meals.join(",");
@@ -33,14 +29,6 @@ function apiSearch(meals) {
     .catch(console.error);
 }
 
-// draws recipes for test
-window.onload = () => {
-  setTimeout(() => {
-    // calculateRecipes(saladRecipes.hits);
-    toggleRecipes();
-  }, 1000);
-};
-
 function calculateRecipes(recipesObj) {
   // if the server didn't find a recipe, we will show error overlay
   // else renders recipes
@@ -65,20 +53,14 @@ function saveRecipeEngine(htmlNode, recipe, name) {
   // depending on the value of the htmlNode
   // the function will add or delete a node at the database
   if (htmlNode.innerHTML === "+") {
-    fire.setNode(`/recipes/${name}`, recipe).then(() => {
+    fire.setNode(recipesRef.child(name), recipe).then(() => {
       _toggleRemoveButton(htmlNode);
     });
   } else {
-    fire.removeNode(`/recipes/${name}`).then(() => {
+    fire.removeNode(recipesRef.child(name)).then(() => {
       _toggleRemoveButton(htmlNode);
     });
   }
-}
-
-function setLoader(classNames) {
-  // it sets the loader depending on the argument
-  let black = DOM.get(".black");
-  black.className = classNames;
 }
 
 // Forming recipe secret code

@@ -73,7 +73,7 @@
 
 .add-meals__input {
   padding: 10px;
-  font-size: 18px;
+  font-size: 1.1rem;
   border: 0px;
   outline: 0;
   border-bottom: 2px solid #3fbcff;
@@ -86,7 +86,7 @@
   outline: none;
   padding: 10px;
   border: 0;
-  font-size: 18px;
+  font-size: 1.1rem;
   margin-left: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -96,15 +96,10 @@
   background: #3fbd20;
 }
 
-nav,
 .add-meals__submit {
   background: #3fbcff;
   color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-nav .title {
-  margin-left: 20px;
 }
 
 .item-text {
@@ -133,6 +128,7 @@ nav .title {
   color: white;
   cursor: pointer;
   display: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .recipes-toggler__text {
   margin: 0px;
@@ -140,7 +136,11 @@ nav .title {
 
 @media (max-width: 800px) {
   #fridge {
-    width: auto;
+    width: 95vw;
+  }
+
+  html {
+    font-size: 20px;
   }
 
   .add-meals {

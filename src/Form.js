@@ -73,14 +73,13 @@ function appendFridgeItem(data) {
   let removeText = item.querySelector(".item-remove__text");
 
   container.title = data.name;
-
   data.name = truncate(data.name, Math.floor(currentWidth / 20));
 
   // delete item preset
   remove.addEventListener("click", () => {
     //
 
-    fire.removeNode(`${data.firebase}${data.key}`).then(() => {
+    fire.removeNode(data.firebase.child(data.key)).then(() => {
       if (data.type === "ADD_RECIPES_LIST") {
         let el = document.querySelector(`[data-recipe-code="${data.key}"]`);
 
@@ -121,22 +120,19 @@ function appendFridgeItem(data) {
 }
 
 function createFormList(path, key) {
-  database
-    .ref(path)
-    .child(key)
-    .on("value", function(data) {
-      let tempMealsArray = data.val();
-      let isDeleted = tempMealsArray === null;
+  path.child(key).on("value", function(data) {
+    let tempMealsArray = data.val();
+    let isDeleted = tempMealsArray === null;
 
-      if (!isDeleted) {
-        tempMealsArray.forEach(el => {
-          if (!~mealsArray.indexOf(el)) {
-            appendFood(el);
-          }
-        });
-        appendFoodCleaner();
-      }
-    });
+    if (!isDeleted) {
+      tempMealsArray.forEach(el => {
+        if (!~mealsArray.indexOf(el)) {
+          appendFood(el);
+        }
+      });
+      appendFoodCleaner();
+    }
+  });
 }
 
 function toggleRecipes() {

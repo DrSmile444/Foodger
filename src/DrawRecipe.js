@@ -54,10 +54,8 @@ function drawRecipe(el) {
   health.innerHTML = calcDietLabels(el.healthLabels, "");
 
   // if the recipe already were added, we will toggle button
-  if (allRecipesOnTheServer) {
-    if (allRecipesOnTheServer[recipeCode]) {
-      _toggleRemoveButton(saveRecipe);
-    }
+  if (allRecipesOnTheServer && allRecipesOnTheServer[recipeCode]) {
+    _toggleRemoveButton(saveRecipe);
   }
 
   // if device is mobile phone, we hide recipe list and must show it

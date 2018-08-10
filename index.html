@@ -8,23 +8,35 @@
   <title>Foodger</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
+  <!-- Styles -->
   <link rel="stylesheet" href="./src/root.css">
+  <link rel="stylesheet" href="./src/styles/UserInfo.css">
+  <link rel="stylesheet" href="./src/styles/Navigation.css">
+  <link rel="stylesheet" href="./src/styles/Login.css">
   <link rel="stylesheet" href="./src/styles/Meals.css">
   <link rel="stylesheet" href="./src/styles/Recipe.css">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 </head>
 
 <body>
-  <nav name="nav">
+  <nav name="nav" class="none">
     <h1 class="title">Foodger</h1>
+
+    <div id="user-container"></div>
+
+    <div class="logout">
+      <button class="logout__button" onclick="_logout()">Logout</button>
+    </div>
   </nav>
 
-  <div class="black">
+  <div name="loader" class="black">
     <div class="loader"></div>
     <p class="black-text"></p>
   </div>
 
-  <div id="app">
+  <button name="scrollUp" onclick="scrollUp()" id="scrollUp" class="animated slideInLeft" title="Go to top">Up</button>
+
+  <div id="app" class="none">
     <div id="wrapper">
       <div id="fridge">
 
@@ -46,9 +58,13 @@
       </div>
     </div>
 
-    <div id="recipes" name="recipes">
+    <div id="recipes" name="recipes"></div>
 
-    </div>
+    <!--  -->
+    <!-- Templates -->
+    <!--  -->
+
+    <!-- Recipe -->
 
     <template id="recipe-template">
       <div class="recipe animated zoomIn">
@@ -89,6 +105,8 @@
       </div>
     </template>
 
+    <!-- Form items -->
+
     <template id="item-template">
       <div class="item">
         <p class="item-text"></p>
@@ -98,12 +116,56 @@
       </div>
     </template>
 
+    <!-- Hide all recipes -->
+
     <template id="hide-all-recipes-template">
       <div class="animated zoomIn hide-all-recipes">
         <p class="hide-all-recipes__text">Hide all</p>
       </div>
     </template>
+
+    <!-- Login -->
+
+    <template id="login-template">
+      <div id="login">
+
+        <div class="login-title">
+          <p class="login-title__text">Foodger</p>
+        </div>
+
+        <div class="login-in">
+
+          <button class="login-in__button" onclick="_authWithGoogle()">
+            <img src="./assets/google-logo-icon-PNG-Transparent-Background-white.png" alt="Google logo" class="login-in__button__image">
+            <p class="login-in__button__text">
+              Sign up with Google
+            </p>
+          </button>
+
+        </div>
+
+      </div>
+    </template>
+
+    <!-- User nav info -->
+
+    <template id="user-info-template">
+      <div id="user-info">
+
+        <div class="user-info-image">
+          <img class="user-info-image__image" alt="User image">
+        </div>
+
+        <div class="user-data">
+          <p class="user-data__text"></p>
+        </div>
+
+      </div>
+    </template>
+
   </div>
+
+  <!-- Scripts -->
 
   <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
   <script>
